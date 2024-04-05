@@ -44,7 +44,7 @@ protected:
 TEST_P(PlannerTest, CollisionsCheck) {
   const auto &[start, goal, plan_size] = GetParam();
   Linestring plan = planner_.makePlan(start, goal);
-  EXPECT_NE(plan.size(), plan_size);
+  EXPECT_EQ(plan.size(), plan_size);
   Zones intersections = planner_.getIntersections(plan);
   if (!plan.empty()) {
     EXPECT_EQ(intersections.size(), 0U);
@@ -57,8 +57,8 @@ INSTANTIATE_TEST_CASE_P(
   CollisionsCheck,
   PlannerTest,
   ::testing::Values(
-    Params{{99.0, -1.0}, {102.0, -1.0}, 0},
-    Params{{99.0, -1.0}, {102.0, 3.0}, 3},
-    Params{{99.0, -1.0}, {102.0, 9.0}, 3}
+    Params{{99.0, -1.0}, {102.0, -1.0}, 2},
+    Params{{99.0, -1.0}, {102.0, 3.0}, 6},
+    Params{{99.0, -1.0}, {102.0, 9.0}, 6}
   ));
 }  // namespace vectorized_pp
